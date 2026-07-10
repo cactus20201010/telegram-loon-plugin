@@ -1,0 +1,16 @@
+#!name=Telegram 跳转
+#!desc=将 t.me 链接重定向到选择的 Telegram 客户端。
+#!author=panda𝕏
+#!homepage=https://github.com/IBL3ND/module
+#!icon=https://iili.io/KQX347S.png
+#!loon_version=3.2.1(734)
+#!tag=Telegram,链接跳转
+
+[Argument]
+CLIENT = select,"Telegram","Swiftgram","Turrit","iMe","Nicegram","Lingogram",tag=Telegram 客户端,desc=选择要跳转到的 Telegram 客户端
+
+[Script]
+http-request ^https?:\/\/t\.me\/.+ script-path=https://raw.githubusercontent.com/cactus20201010/telegram-loon-plugin/main/TgRedirect.js,tag=Telegram 链接重定向,timeout=10,argument=[{CLIENT}],enable=true
+
+[MITM]
+hostname = t.me
