@@ -1,5 +1,6 @@
 const SCHEME = {
   Telegram: "tg",
+  Nagram: "tg",
   Swiftgram: "sg",
   Turrit: "turrit",
   iMe: "ime",
@@ -38,11 +39,14 @@ function deeplink(scheme, path, qs) {
 function main() {
   try {
     const url = typeof $request === "object" ? $request.url : "";
-    const match = typeof url === "string" && url.match(/^https?:\/\/t\.me\/(.+)$/i);
+    const match = typeof url === "string" && url.match(/^https?:\/\/(?:t\.me|telegram\.me)\/(.+)$/i);
     if (!match) return $done({});
 
     const argument = typeof $argument === "object" && $argument ? $argument : {};
-    const requested = typeof argument.CLIENT === "string" ? argument.CLIENT.trim() : "Telegram";
+    const requested = typeof argument.CLIENT === "string" && argument.CLIENT.trim()
+      ? argument.CLIENT.trim()
+      : "Telegram";
+    if (requested === "Telegram") return $done({});
     const scheme = Object.prototype.hasOwnProperty.call(SCHEME, requested) ? SCHEME[requested] : "tg";
 
     let tail = match[1];
